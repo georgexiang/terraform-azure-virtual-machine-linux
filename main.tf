@@ -17,7 +17,7 @@ resource "azurerm_subnet" "example" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
-resource "azurerm_public_ip" "example" {
+resource "azurerm_public_ip" "publicip" {
   name                = "example-pip"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
@@ -33,12 +33,12 @@ resource "azurerm_network_interface" "example" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.example.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.example.id
+    public_ip_address_id          = azurerm_public_ip.publicip.id
   }
 }
 
 resource "azurerm_virtual_machine" "example" {
-  name                  = "example-vm"
+  name                  = var.virtual_machine_name
   location              = azurerm_resource_group.example.location
   resource_group_name   = azurerm_resource_group.example.name
   network_interface_ids = [azurerm_network_interface.example.id]
@@ -62,8 +62,8 @@ resource "azurerm_virtual_machine" "example" {
 
   os_profile {
     computer_name  = "hostname"
-    admin_username = "adminuser"
-    admin_password = "P@ssw0rd1234!"
+    admin_username = var.virtual_machine_admin_username
+    admin_password = var.virtual_machine_admin_password
   }
 
   os_profile_linux_config {
@@ -71,7 +71,7 @@ resource "azurerm_virtual_machine" "example" {
 
     ssh_keys {
       path     = "/home/adminuser/.ssh/authorized_keys"
-      key_data = file("M:/Git/terraform-azure-virtual-machine-linux/keys/id_rsa.pub")
+      key_data = file(var.virtual_machine_ssh_key_path)
     }
   }
 }
