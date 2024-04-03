@@ -42,8 +42,20 @@ terraform apply tfplan
 
 ## Access the virtual machine
 
+Ensure the proper permission for the private key:
+
+``` bash
+chmod 600 id_rsa
+```
+
+Establish a connection to the virtual machine using:
+
+``` bash
+ssh -i id_rsa adminuser@<public ip address>
+```
+
 <p align="left">
-  <img src="pictures/chmod_and_access.png" width="40%" height="30%" title="chmod_and_access">
+  <img src="pictures/chmod_and_access.png" width="60%" height="60%" title="chmod_and_access">
 </p>
 
 ## Destruction of the virtual machine using Terraform
