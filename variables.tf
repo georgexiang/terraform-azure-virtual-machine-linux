@@ -18,6 +18,6 @@ variable "virtual_machine_admin_password" {
 
 variable "virtual_machine_ssh_key_path" {
     type =  string
-    default = "M:/Git/terraform-azure-virtual-machine-linux/keys/id_rsa.pub"
-    description = "Path to the private key"
+    default = "id_rsa.pub"
+    description = "Path to the public key"
 }
