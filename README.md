@@ -6,6 +6,15 @@ In the same directory as your .tf files are located, run
 
 ``` terraform
   ssh-keygen -f id_rsa
+
+  ssh-keygen -t ed25519 -f id_ed25519
+
+  ssh-keygen -t ed25519 -f ~/.ssh/azure-ed25519-$(date +%Y%m%d) -C "$(whoami)@$(date +%Y%m%d)"
+  ssh-keygen -t rsa -b 4096 -f ~/.ssh/azure-rsa-$(date +%Y%m%d) -C "$(whoami)@$(date +%Y%m%d)"
+
+
+
+
 ```
 Skip the passphrase.
 
@@ -46,6 +55,7 @@ Ensure the proper permission for the private key:
 
 ``` bash
 chmod 600 id_rsa
+
 ```
 
 Establish a connection to the virtual machine using:
